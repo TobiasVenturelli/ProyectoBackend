@@ -1,5 +1,7 @@
 import { productModel } from "../../models/product.model.js"
 
+
+
 class ProductDao {
     async getAll({limit=10, page=1, sort, category, status}){
         const sortValidValues = [-1, 1, '-1', '1']
@@ -32,12 +34,21 @@ class ProductDao {
         
     }
 
+
     async getById(id){
         return await productModel.findById(id);
     }
 
     async create(data) {
-        return await productModel.create(data)
+
+        try {
+            const create = await productModel.create(data);
+            return create;
+        } catch (error) { 
+            console.error('Error al crear el producto:', error);
+            throw error;
+        }
+        
     }
 
     async update(id, data){

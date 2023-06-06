@@ -3,11 +3,11 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.get('/', async(req, res) => {
-    const {page, limit, sort, category, status} = req.query;
+router.get('/', async (req, res) => {
+    const { page, limit, sort, category, status } = req.query;
 
     try {
-        const products = await productsDao.getAll({page, limit, sort, category, status});
+        const products = await productsDao.getAll({ page, limit, sort, category, status });
         res.json(products);
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -23,11 +23,21 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/api/product', async (req, res) => {
     try {
-        const product = await productsDao.create(req.body);
-        //res.json(product);
-        res.redirect('/');
+
+        const productData = {
+            title: zapato,
+            description: Negro,
+            code: 123,
+            price: 55,
+            stock: 10,
+            category: zapato,
+            thumbnails
+        };
+        const product = await productsDao.create(productData);
+        res.json(create);
+
     } catch (err) {
         res.status(500).json({ error: err.message })
     }

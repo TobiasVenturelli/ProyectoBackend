@@ -20,9 +20,12 @@ const app = express();
 
 // --- mongoDB
 mongoose.set('strictQuery', true);
-mongoose.connect('mongodb+srv://integradora:facil123@ecommerce.vfoz9th.mongodb.net/?retryWrites=true&w=majority').
-    catch(err => console.log('Error al conectar a MongoDB', err));
-
+try {
+    await mongoose.connect('mongodb+srv://clase17:facil123@cluster01.ewwbann.mongodb.net/?retryWrites=true&w=majority');
+    console.log('Conexión exitosa a MongoDB');
+} catch (err) {
+    console.log('Error al conectar a MongoDB', err);
+}
 // --- handlebars config
 app.engine('hbs', handlebars.engine({
     extname: 'hbs',
