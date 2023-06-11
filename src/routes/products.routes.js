@@ -4,7 +4,7 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const { page, limit, sort, category, status } = req.query;
+    const { page, limit, sort, category, status } = req.body;
 
     try {
         const products = await productsDao.getAll({ page, limit, sort, category, status });
@@ -22,26 +22,16 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ error: err.message })
     }
 })
-
 router.post('/api/product', async (req, res) => {
     try {
-
-        const productData = {
-            title: zapato,
-            description: Negro,
-            code: 123,
-            price: 55,
-            stock: 10,
-            category: zapato,
-            thumbnails
-        };
-        const product = await productsDao.create(productData);
+        const create = await productsDao.create(req.body);
         res.json(create);
 
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
 })
+ 
 
 router.put('/:id', async (req, res) => {
     try {

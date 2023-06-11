@@ -52,4 +52,4 @@ app.use('/', viewsRouter);
 app.get('*', (req, res) => { res.status(404).send('404 not found')})
 
 
-app.listen(3000, () => console.log('Server up in port 3000'))
+app.listen(3000, () => console.log('Servidor escuchando en el puerto 3000'))
