@@ -10,17 +10,17 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     if( !email || !password ) {
-        return res.status(400).json({err: 'Missing fields'})
+        return res.status(400).json({err: 'Faltan completar campos'})
     }
     
     const user = await userModel.findOne({ email });
 
     if (!user){
-        return res.status(404).json({err: 'User not found'})
+        return res.status(404).json({err: 'Usuario no encontrado'})
     }
 
     if(!isValidPass(user, password)) {
-        return res.status(401).json({err: 'Invalid password'})
+        return res.status(401).json({err: 'Contraseña invalida'})
     } 
 
     const token = jwt.sign({email, first_name: user.first_name, last_name: user.last_name, role: user.role }, 'pageSecret', { expiresIn: '10m' });
@@ -33,13 +33,13 @@ router.post('/register', async (req, res) => {
     const { first_name, last_name, email, age, password } = req.body;
 
     if( !first_name || !last_name || !age || !email || !password ) {
-        return res.status(400).json({err: 'Missing fields'})
+        return res.status(400).json({err: 'Faltan completar campos'})
     }
     
     const user = await userModel.findOne({ email });
 
     if (user){
-        return res.status(404).json({err: 'Email already exists in the database'})
+        return res.status(404).json({err: 'El correo electrónico ya existe en la base de datos.'})
     }
 
     const newuser = await userModel.create({first_name, last_name, email, age, password: hashPassword(password)})
